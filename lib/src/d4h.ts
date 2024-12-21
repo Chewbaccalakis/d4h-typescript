@@ -1,12 +1,11 @@
 import { CustomFieldUpdate } from './customField'
 import D4HRequest from './d4hRequest'
-import { EmergencyContacts } from './emergencyContacts'
 import { Entity, EntityType } from './entity'
 import type { Group } from './group'
 import type { Member, MemberUpdate } from './member'
 
 const D4H_FETCH_LIMIT = 250
-const D4H_BASE_URL = 'https://api.d4h.org/v2'
+const D4H_BASE_URL = 'https://api.team-manager.us.d4h.com/v3' // Multiple API endpoints now, could potentially be different?
 
 export interface GetMemberOptions {
     includeDetails?: boolean;
@@ -34,8 +33,8 @@ export default class D4H {
     /**************** MEMBERS *******************/
     /********************************************/
     
-    async getMemberAsync(id: number, options?: GetMemberOptions): Promise<Member> {
-        const url = new URL(`${D4H_BASE_URL}/team/members/${id}`)
+    async getMemberAsync(context: string, contextId: number, id: number, options?: GetMemberOptions): Promise<Member> {
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/members/${id}`)
         
         if (options !== undefined) {
             const optionsList = url.searchParams
@@ -51,8 +50,8 @@ export default class D4H {
         return member
     }
 
-    async getMembersAsync(options?: GetMembersOptions): Promise<Member[]> {
-        const url = new URL(`${D4H_BASE_URL}/team/members`)
+    async getMembersAsync(context: string, contextId: number, options?: GetMembersOptions): Promise<Member[]> {
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/members`)
 
         if (options !== undefined) {
             const optionsList = url.searchParams
@@ -76,13 +75,13 @@ export default class D4H {
         return members
     }
 
-    updateMemberAsync(id: number, updates: MemberUpdate): Promise<void> {
+    updateMemberAsync(context: string, contextId: number, id: number, updates: MemberUpdate): Promise<void> {
         // If no updates, no need to actually make a request. Exit early.
         if (Object.getOwnPropertyNames(updates).length === 0) {
             return Promise.resolve()
         }
 
-        const url = new URL(`${D4H_BASE_URL}/team/members/${id}`)
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/members/${id}`)
         return this._request.putAsync(url, updates)
     }
 
@@ -90,27 +89,19 @@ export default class D4H {
     /*********** EMERGENCY CONTACTS *************/
     /********************************************/
 
-    getEmergencyContacts(memberId: number): Promise<EmergencyContacts> {
-        const url = new URL(`${D4H_BASE_URL}/team/members/${memberId}/emergency`)
-        return this._request.getAsync(url)
-    }
-
-    updateEmergencyContacts(memberId: number, emergencyContacts: EmergencyContacts): Promise<EmergencyContacts> {
-        const url = new URL(`${D4H_BASE_URL}/team/members/${memberId}/emergency`)
-        return this._request.putAsync(url, emergencyContacts)
-    }
+    // Emergency Contacts no longer have specific endpoint
 
     /********************************************/
     /***************** GROUPS *******************/
     /********************************************/
 
-    getGroupAsync(id: number): Promise<Group> {
-        const url = new URL(`${D4H_BASE_URL}/team/groups/${id}`)
+    getGroupAsync(context: string, contextId: number, id: number): Promise<Group> { // Assuming intent was to gather member groups
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/member-groups/${id}`)
         return this._request.getAsync<Group>(url)
     }
 
-    getGroupsAsync(options?: GetGroupsOptions): Promise<Group[]> {
-        const url = new URL(`${D4H_BASE_URL}/team/groups`)
+    getGroupsAsync(context: string, contextId: number, options?: GetGroupsOptions): Promise<Group[]> {
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/member-groups`)
 
         if (options !== undefined) {
             const optionsList = url.searchParams
