@@ -86,3 +86,6 @@ tests/cases/user/prettier/prettier
 .eslintcache
 *v8.log
 **/*.env
+
+
+getmember.json
