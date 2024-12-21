@@ -1,4 +1,3 @@
-import { EmergencyContact } from './emergencyContacts'
 import { Entity } from './entity'
 
 export interface MemberStatus {
@@ -13,20 +12,120 @@ export interface MemberStatusLabel {
     value: string
 }
 
-export interface Member extends Entity {
-    address: string
-    email: string | null
-    emergency_contacts: EmergencyContact[]
-    group_ids: number[] | null
-    homephone: string
-    joined_at: string
-    mobilephone: string
+export interface CustomMemberStatus {
+    id: number | null
+    resourceType: string
+}
+
+export interface EquipmentLocation {
+    id: number | null
+    resourceType: string
+}
+
+export interface EmailInfo {
+    value: string
+    verified: boolean
+}
+
+export interface PhoneInfo {
+    phone: string
+    verified: boolean
+}
+
+export interface PrimaryEmergencyContact {
     name: string
-    notes: string | null
-    position: string
+    primaryPhone: string
+    secondaryPhone: string
+    relation: string
+}
+
+export interface SecondaryEmergencyContact {
+    name: string
+    primaryPhone: string
+    secondaryPhone: string
+    relation: string
+}
+
+export interface RetiredReason {
+    id: number | null
+    resourceType: string
+}
+
+export interface Role {
+    id: number | null
+    resourceType: string
+}
+
+export interface LocationBookmark {
+    id: number | null
+    resourceType: string
+}
+
+export interface Location {
+    type: string
+    coordinates: [number, number]
+}
+
+export interface Member extends Entity {
+    id: number
+    name: string
     ref: string
-    status: MemberStatus
-    workphone: string
+    status: string
+    position: string
+    createdAt: string
+    updatedAt: string
+    startsAt: string | null
+    endsAt: string | null
+    lastLogin: string | null
+    weeklyDayOfWeek: number
+    weeklyDayOfWeekUtc: number
+    weeklyHourOfDay: number
+    weeklyHourOfDayUtc: number
+    email: EmailInfo
+    home: PhoneInfo
+    mobile: PhoneInfo
+    work: PhoneInfo
+    pager: PhoneInfo
+    notes: string | null
+    permission: number
+    credits: number
+    defaultDuty: string
+    defaultEquipmentLocation: EquipmentLocation
+    customStatus: CustomMemberStatus
+    location: Location
+    locationBookmark: LocationBookmark
+    retiredReason: RetiredReason
+    role: Role
+    primaryEmergencyContact: PrimaryEmergencyContact
+    secondaryEmergencyContact: SecondaryEmergencyContact
+    alertActivityApproval: boolean
+    alertAllQualifications: boolean
+    alertGear: boolean
+    alertQualifications: boolean
+    chatAutosubscribe: boolean
+    chatDailyDigest: boolean
+    contactUpdateMail: boolean
+    weeklyMail: boolean
+    deprecatedAddress: string | null
+    icalSecret: string | null
+    costPerHour: number | null
+    costPerUse: number | null
+    countReportingEvent: number
+    countReportingExercise: number
+    countReportingHours: number
+    countReportingIncident: number
+    countRollingHours: number
+    countRollingHoursEvent: number
+    countRollingHoursExercise: number
+    countRollingHoursIncident: number
+    percReportingEvent: number
+    percReportingExercise: number
+    percReportingIncident: number
+    percRollingEvent: number
+    percRollingExercise: number
+    percRollingIncident: number
+    signedTandC: string | null
+    teamAgreementSigned: string | null
 }
 
 export interface MemberUpdate {
@@ -42,11 +141,6 @@ export interface MemberUpdate {
     role_id?: number
     cost_per_hour?: number
     cost_per_use?: number
-    address_street?: string | null
-    address_city?: string | null
-    address_region?: string | null
-    address_postcode?: string | null
-    address_country?: string | null
     lat?: number
     lng?: number
     gridref?: string | null
