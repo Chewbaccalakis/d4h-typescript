@@ -1,7 +1,7 @@
 import D4HRequest from '../d4hRequest'
 import { EntityType } from '../entity'
 import D4H, { D4H_BASE_URL } from '../d4h'
-import { Activity } from '../types/activity';
+import { Activity } from '../types/activity'
 
 
 /** @ignore @inline */
