@@ -33,7 +33,7 @@ class CustomFields {
      * @returns - A custom field
      */
     async getCustomField(context: 'admin' | 'organisation' | 'team', contextId: number, customFieldId: number): Promise<CustomField> {
-        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/attendance/${customFieldId}`)
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/custom-fields/${customFieldId}`)
         
         try {
             const customField = await this._request.getAsync<CustomField>(url)
@@ -63,7 +63,7 @@ class CustomFields {
      * @returns - A list of custom fields
      */
     async getCustomFields(context: 'admin' | 'organisation' | 'team', contextId: number, options?: GetCustomFieldOptions): Promise<CustomField[]> {
-        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/attendance`)
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/custom-fields`)
 
         if (options !== undefined) {
             const optionsList = url.searchParams
