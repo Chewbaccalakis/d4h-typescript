@@ -2,6 +2,7 @@ import D4HRequest from './d4hRequest'
 import { Team } from './types/team'
 import { Organisation } from './types/organisation'
 import { EntityType } from './entity'
+import { customerId } from './types/customerId'
 
 
 /** @ignore */
@@ -87,8 +88,33 @@ class Organisations {
     }
 }
 
+class CustomerIds {
+    private readonly _request: D4HRequest
+
+    constructor(d4hInstance: D4H) {
+        this._request = d4hInstance.request
+    }
+
+    /**
+     * @param context - The point of view from where the request takes place
+     * @param contextId - Either a team, organisation or admin's id
+     * @returns - The Customer identifiers this context has
+     */
+    async getCustomerId(context: 'admin' | 'organisation' | 'team', contextId: number): Promise<customerId[]> {
+        const url = new URL(`${D4H_BASE_URL}/${context}/${contextId}/customer-identifiers`)
+
+        try {
+            const customerId = await this._request.getManyAsync<customerId>(url)
+            return customerId
+        } catch (error) {
+            throw new Error('Customer Id data not found or improperly formatted.')
+        }
+    }
+}
+
 export {
     Teams,
     Organisations,
+    CustomerIds
 }
 export default D4H
