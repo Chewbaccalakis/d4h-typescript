@@ -22,5 +22,6 @@ export enum EntityType {
     Team = 'team',
     Organisation = 'organisation',
     Role = 'role',
-    Activity = 'activity'
+    Activity = 'activity',
+    CustomField = 'customfield'
 }

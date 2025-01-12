@@ -1,18 +1,37 @@
+import { Entity } from '../entity'
+import { resourceType } from './generic'
+
 /** @ignore @inline */
-export enum CustomFieldType {
-    Number = 'number',
-    Text = 'text',
-    Date = 'date',
+export interface OptionsType {
+    id: number;
+    ordering: number;
+    customField: resourceType;
+    label: string;
+    archivedAt: null;
+    owner: resourceType;
+    createdAt: string;
+    updatedAt: string;
 }
 
-export interface CustomField {
+export interface CustomField extends Entity {
     id: number;
-    type: CustomFieldType;
-    label: string;
-    value_string: string | null;
-    value: string | null;
-    bundle: unknown | null;
-    member_edit_own: boolean;
+    owner: resourceType;
+    targetResourceType: string;
+    ordering: number;
+    title: string;
+    type: string;
+    restricted: string;
+    memberPrivacy: string;
+    hint: null;
+    bundle: resourceType;
+    searchable: boolean;
+    mandatory: boolean
+    archivedAt: null;
+    createdAt: string;
+    updatedAt: string;
+    options: OptionsType;
+    resourceType: string;
+    valueUnits: null;
 }
 
 /** @ignore @inline */
