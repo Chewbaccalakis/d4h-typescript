@@ -1,5 +1,5 @@
 import { Entity } from '../entity'
-import { resourceType } from './generic';
+import { resourceType } from './generic'
 
 export interface Activity extends Entity {
 
