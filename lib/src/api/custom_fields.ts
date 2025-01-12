@@ -14,7 +14,7 @@ export interface GetCustomFieldOptions {
     resource_bundle_id?: number | string;
     restricted?: 'RESTRICTED' | 'UNRESTRICTED';
     size?: number;
-    sort?: 'createdAt' | 'id' | 'updatedAt'; // default: 'id'
+    sort?: 'createdAt' | 'id' | 'ordering' |'updatedAt'; // default: 'id'
     target_resource_type?: string | string[];
 }
 
